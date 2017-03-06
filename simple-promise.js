@@ -9,18 +9,18 @@ var SimplePromise = function(executor) {
 	var that = this;
 
 	var resolve = function(data) {
-		if (that.status !== "PENDING" )
+		if (that.status === "REJECTED" )
 			return;
 
 		that.status = "FULFILLED"
 		that.resolveListeners.forEach(function (fn) {
-			fn.call(null, data);
+			var ret = fn.call(null, data);
 		});
 
 	}
 
 	var reject = function(err) {
-		if (that.status !== "PENDING" )
+		if (that.status === "FULFILLED" )
 			return;
 
 		that.status = "REJECTED"
