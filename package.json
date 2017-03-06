@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/nm123github/simple-promises/issues"
   },
-  "homepage": "https://github.com/nm123github/simple-promises#readme"
+  "homepage": "https://github.com/nm123github/simple-promises#readme",
+  "dependencies": {
+    "jquery": "~3.1.1",
+    "tape": "~4.6.3",
+    "uniq": "~1.0.1"
+  }
 }

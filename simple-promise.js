@@ -19,13 +19,16 @@ var SimplePromise = function(executor) {
 
 	}
 
-	var reject = function(Error) {
+	var reject = function(err) {
 		if (that.status !== "PENDING" )
 			return;
 
 		that.status = "REJECTED"
 		that.rejectListeners.forEach(function (fn) {
-			fn.call(null, data);
+			if ( err instanceof Error )
+				fn.call(null, err);
+			else
+				fn.call(null, new Error(err));
 		});
 
 	}
@@ -42,10 +45,4 @@ SimplePromise.prototype.catch = function(fn) {
 	this.rejectListeners.push(fn);
 }
 
-new SimplePromise(function(resolve, reject) {
-	setTimeout(function() {
-		resolve('yay!')
-	}, 5000);
-}).then(function(data) {
-	console.log('data -> ' + data);
-});
+module.exports = SimplePromise;
