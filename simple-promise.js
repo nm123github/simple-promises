@@ -19,12 +19,8 @@ var SimplePromise = function(executor) {
 	}
 
 	this.addRejectListeners = function(fn) {
-		if (that.status === "REJECTED") {
-			if ( that.error instanceof Error )
-				fn.call(null, that.error);
-			else
-				fn.call(null, new Error(that.error));
-		}
+		if (that.status === "REJECTED")
+			fn.call(null, that.error);
 		else
 			that.rejectListeners.push(fn);
 	}
@@ -48,10 +44,7 @@ var SimplePromise = function(executor) {
 		that.status = "REJECTED"
 		that.error = err;
 		that.rejectListeners.forEach(function (fn) {
-			if ( err instanceof Error )
-				fn.call(null, err);
-			else
-				fn.call(null, new Error(err));
+			fn.call(null, err);
 		});
 
 	}

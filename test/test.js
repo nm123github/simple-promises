@@ -66,7 +66,7 @@ test("simplepromise-noresolve-afterreject", function(t) {
 	})
 
 	sp.catch(function(err) {
-		t.equals(err.message, "noooo");
+		t.equals(err, "noooo");
 		t.end();
 	});
 
