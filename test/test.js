@@ -51,10 +51,8 @@ test("simplepromise-multiple-thens", function(t) {
 })
 
 
-// TODO: If you call reject immediately,
-// and then attach catch handler,
-// it should still be called
-xtest("simplepromise-noresolve-afterreject", function(t) {
+// If you call reject immediately, and then attach catch handler, it should still be called
+test("simplepromise-noresolve-afterreject", function(t) {
 
 	var sp = new SimplePromise(function(resolve, reject) {
 		setTimeout(function() {
