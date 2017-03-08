@@ -49,8 +49,11 @@ var SimplePromise = function(executor) {
 
 	}
 
-	executor.call(null, resolve, reject);
-
+	try {
+		executor.call(null, resolve, reject);
+	} catch ( err ) {
+		reject(err);
+	}
 }
 
 SimplePromise.prototype.then = function(fn) {

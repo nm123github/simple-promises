@@ -30,6 +30,18 @@ test("simplepromise-rejected", function(t) {
 
 })
 
+test("simplepromise-throw", function(t) {
+
+	new SimplePromise(function(resolve, reject) {
+		throw new Error("nah!");
+	}).catch(function(error) {
+		t.equals(true, error instanceof Error);
+		t.equals(error.message, "nah!");
+		t.end();
+	});
+
+})
+
 test("simplepromise-multiple-thens", function(t) {
 
 	var sp = new SimplePromise(function(resolve, reject) {
