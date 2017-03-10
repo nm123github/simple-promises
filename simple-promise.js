@@ -57,7 +57,20 @@ var SimplePromise = function(executor) {
 }
 
 SimplePromise.prototype.then = function(fn) {
-	this.addResolveListeners(fn);
+
+	var that = this;
+	return new SimplePromise(function(resolve, reject) {
+		var go = function(data) {
+			try {
+				var ret = fn.call(null, data);
+				resolve(ret);
+			} catch (err) {
+				reject(err);
+			}
+		}
+		that.addResolveListeners(go);
+	})
+
 }
 
 SimplePromise.prototype.catch = function(fn) {

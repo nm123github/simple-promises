@@ -84,8 +84,7 @@ test("simplepromise-noresolve-afterreject", function(t) {
 
 })
 
-// TODO: Please fix chaining!
-xtest("simplepromise-chaining", function(t) {
+test("simplepromise-chaining-then", function(t) {
 
 	new SimplePromise(function(resolve, reject) {
 		setTimeout(function() {
@@ -96,6 +95,36 @@ xtest("simplepromise-chaining", function(t) {
 		return "yay again!"
 	}).then(function(data) {
 		t.equals(data, "yay again!");
+		t.end();
+	});
+
+})
+
+test("simplepromise-chaining-then-noreturn", function(t) {
+
+	new SimplePromise(function(resolve, reject) {
+		setTimeout(function() {
+			resolve('yay!')
+		}, 1000);
+	}).then(function(data) {
+		t.equals(data, "yay!");
+	}).then(function(data) {
+		t.equals(data, undefined);
+		t.end();
+	});
+
+})
+
+test("simplepromise-chaining-catch", function(t) {
+
+	new SimplePromise(function(resolve, reject) {
+		setTimeout(function() {
+			resolve('yay!')
+		}, 1000);
+	}).then(function(data) {
+		throw "noooo!"
+	}).catch(function(err) {
+		t.equals(err, "noooo!");
 		t.end();
 	});
 
