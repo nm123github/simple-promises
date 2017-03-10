@@ -100,6 +100,45 @@ test("simplepromise-chaining-then", function(t) {
 
 })
 
+test("simplepromise-chaining-then-promises-resolve", function(t) {
+
+	new SimplePromise(function(resolve, reject) {
+		setTimeout(function() {
+			resolve('yay!')
+		}, 1000);
+	}).then(function(data) {
+		return new SimplePromise(function(resolve, reject) {
+			setTimeout(function() {
+				resolve('yay again!')
+			}, 1000);
+		});
+	}).then(function(data) {
+		t.equals(data, "yay again!");
+		t.end();
+	});
+
+})
+
+test("simplepromise-chaining-then-promises-reject", function(t) {
+
+	new SimplePromise(function(resolve, reject) {
+		setTimeout(function() {
+			resolve('yay!')
+		}, 1000);
+	}).then(function(data) {
+		return new SimplePromise(function(resolve, reject) {
+			setTimeout(function() {
+				resolve('yay again!')
+			}, 1000);
+			reject('noooo');
+		});
+	}).catch(function(err) {
+		t.equals(err, "noooo");
+		t.end();
+	});
+
+})
+
 test("simplepromise-chaining-then-noreturn", function(t) {
 
 	new SimplePromise(function(resolve, reject) {

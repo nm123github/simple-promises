@@ -63,7 +63,16 @@ SimplePromise.prototype.then = function(fn) {
 		var go = function(data) {
 			try {
 				var ret = fn.call(null, data);
-				resolve(ret);
+				if (ret instanceof SimplePromise) {
+					ret.then(function(data) {
+						resolve(data);
+					});
+					ret.catch(function(err) {
+						reject(err);
+					});
+				} else {
+					resolve(ret);
+				}
 			} catch (err) {
 				reject(err);
 			}
